@@ -1,5 +1,3 @@
-const allSongs = []
-
 const getArtist = async (query) => {
     const endpoint = `http://striveschool-api.herokuapp.com/api/deezer/search?q=${query}`;
     try {
@@ -40,53 +38,6 @@ const createCards = (idSection, artist) => {
     col.append(card);
 }
 
-
-document.querySelector('#button-search').addEventListener('click', (query) => {
-    document.querySelectorAll('.col').forEach(col => col.remove());
-    document.querySelectorAll('.modal-body ul li').forEach(li => li.remove());
-    
-    document.getElementById('mainPage').style.display = 'none';
-    
-    query = document.querySelector('#searchField').value;
-    
-    getArtist(query).then(res => {
-        res.map(artist => {
-            createCards('#cardsContainer__results', artist)
-            popolateSongsList(artist);
-        })
-
-        document.getElementById('resultsSection').style.display = 'flex';
-        document.querySelector('.artistName').innerHTML = res[0].artist.name;
-    })
-})
-
-
-getArtist('Band of Horses').then(res => {
-    res.map(artist => {
-        createCards('#cardsContainer__BandofHorses', artist);
-        popolateSongsList(artist);
-    })
-})
-getArtist('The Strokes').then(res => {
-    res.map(artist => {
-        createCards('#cardsContainer__TheStrokes', artist);
-        popolateSongsList(artist);
-    })
-})
-getArtist('The Vaccines').then(res => {
-    res.map(artist => {
-        createCards('#cardsContainer__TheVaccines', artist);
-        popolateSongsList(artist);
-    })
-})
-getArtist('Arctic Monkeys').then(res => {
-    res.map(artist => {
-        createCards('#cardsContainer__ArcticMonkeys', artist);
-        popolateSongsList(artist);
-    })
-})
-
-
 const popolateSongsList = (artist) => {
     const listItem = document.createElement('li');
     listItem.classList.add('list-group-item', 'small', 'd-flex', 'justify-content-between');
@@ -112,3 +63,52 @@ const swiper = new Swiper('.swiper', {
     spaceBetween: 20,
     grabCursor: true
   });
+
+
+
+getArtist('Band of Horses').then(res => {
+    res.map(artist => {
+        createCards('#cardsContainer__BandofHorses', artist);
+        popolateSongsList(artist);
+    })
+})
+
+getArtist('The Strokes').then(res => {
+    res.map(artist => {
+        createCards('#cardsContainer__TheStrokes', artist);
+        popolateSongsList(artist);
+    })
+})
+
+getArtist('The Vaccines').then(res => {
+    res.map(artist => {
+        createCards('#cardsContainer__TheVaccines', artist);
+        popolateSongsList(artist);
+    })
+})
+
+getArtist('Arctic Monkeys').then(res => {
+    res.map(artist => {
+        createCards('#cardsContainer__ArcticMonkeys', artist);
+        popolateSongsList(artist);
+    })
+})
+
+document.querySelector('#button-search').addEventListener('click', (query) => {
+    document.querySelectorAll('.col').forEach(col => col.remove());
+    document.querySelectorAll('.modal-body ul li').forEach(li => li.remove());
+    
+    document.getElementById('mainPage').style.display = 'none';
+    
+    query = document.querySelector('#searchField').value;
+    
+    getArtist(query).then(res => {
+        res.map(artist => {
+            createCards('#cardsContainer__results', artist)
+            popolateSongsList(artist);
+        })
+
+        document.getElementById('resultsSection').style.display = 'flex';
+        document.querySelector('.artistName').innerHTML = res[0].artist.name;
+    })
+})
